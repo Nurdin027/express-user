@@ -51,7 +51,7 @@ describe('Test Detail User', () => {
 });
 describe('Test Create User', () => {
     let payload = {
-        "name": "Amar", "gender": "male", "email": "amarnurdin19@test.com", "status": "active"
+        "name": "Miroslav Klose", "gender": "male", "email": "klose@email.com", "status": "active"
     }
 
     it('should pass the test', async () => {

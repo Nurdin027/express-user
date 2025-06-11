@@ -153,6 +153,13 @@ const updateUser = async (req, res) => {
         })
     }
     try {
+        const ada = await User.findById(id)
+        if (!ada) {
+            return res.status(400).send({
+                success: false,
+                message: "User tidak ditemukan",
+            })
+        }
         const user = await User.findByIdAndUpdate(id, {
             name: req.body.name,
             gender: req.body.gender,
@@ -191,7 +198,14 @@ const deleteUser = async (req, res) => {
             })
         }
         jwt.verify(token, process.env.TOKEN_SECRET);
-        await User.findByIdAndDelete(id)
+        let user = await User.findById(id)
+        if (!user) {
+            return res.status(400).send({
+                success: false,
+                message: "User tidak ditemukan",
+            })
+        }
+        // await User.findByIdAndDelete(id)
         return res.status(200).send({
             success: true,
             message: "Berhasil menghapus data",

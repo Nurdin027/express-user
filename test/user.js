@@ -1,7 +1,7 @@
 const supertest = require("supertest")
 const {expect} = require("chai")
 
-let baseUrl = "http://localhost:3000/api"
+let baseUrl = "http://localhost:3121/api"
 
 describe('Test Show User', () => {
     let limit = 1000, offset = 0
@@ -19,10 +19,10 @@ describe('Test Show User', () => {
         let resp = await supertest(baseUrl)
             .get(`/user/${limit}/${offset}`)
             .set("Authorization", `Bearer ${token}`)
+        console.log(resp.body)
         expect(resp.statusCode).to.equal(200);
         expect(resp.body).haveOwnProperty("data");
         expect(resp.body.data).to.be.an('array');
-        console.log(resp.body)
         console.log("Test passed!")
     });
 });
@@ -69,8 +69,8 @@ describe('Test Create User', () => {
             .post(`/user`)
             .set("Authorization", `Bearer ${token}`)
             .send(payload)
-        expect(resp.statusCode).to.equal(200);
         console.log(resp.body)
+        expect(resp.statusCode).to.equal(200);
         console.log("Test passed!")
     });
 
@@ -88,11 +88,11 @@ describe('Test Create User', () => {
             .post(`/user`)
             .set("Authorization", `Bearer ${token}`)
             .send(payload)
+        console.log(resp.body)
         expect(resp.statusCode).to.equal(400);
         expect(resp.body).to.haveOwnProperty("message");
         expect(resp.body.message).to.equal("Validation error");
         expect(resp.body).to.haveOwnProperty("errors");
-        console.log(resp.body)
         console.log("Test passed!")
     });
     it('should fail the test (requirement)', async () => {
@@ -110,18 +110,18 @@ describe('Test Create User', () => {
             .post(`/user`)
             .set("Authorization", `Bearer ${token}`)
             .send(payload)
+        console.log(resp.body)
         expect(resp.statusCode).to.equal(400);
         expect(resp.body).to.haveOwnProperty("message");
         expect(resp.body.message).to.equal("Validation error");
         expect(resp.body).to.haveOwnProperty("errors");
-        console.log(resp.body)
         console.log("Test passed!")
     });
 });
 describe('Test Update User', () => {
     let payload = {
-        "name": "Nurdin", "gender": "male", "email": "nurdin18@test.com", "status": "active"
-    }, userID = "684835a71cc664255f4724a9"
+        "name": "Nurdin", "gender": "male", "email": "nurdin19@test.com", "status": "active"
+    }, userID = "6848e6fadb513e13d9a8924b"
     it('should pass the test', async () => {
         // region Login
         let token
@@ -156,11 +156,11 @@ describe('Test Update User', () => {
             .post(`/user`)
             .set("Authorization", `Bearer ${token}`)
             .send(payload)
+        console.log(resp.body)
         expect(resp.statusCode).to.equal(400);
         expect(resp.body).to.haveOwnProperty("message");
         expect(resp.body.message).to.equal("Validation error");
         expect(resp.body).to.haveOwnProperty("errors");
-        console.log(resp.body)
         console.log("Test passed!")
     });
 });
@@ -181,8 +181,8 @@ describe('Test Delete User', () => {
         let resp = await supertest(baseUrl)
             .delete(`/user/${userID}`)
             .set("Authorization", `Bearer ${token}`)
-        expect(resp.statusCode).to.equal(200);
         console.log(resp.body)
+        expect(resp.statusCode).to.equal(200);
         console.log("Test passed!")
     });
 });

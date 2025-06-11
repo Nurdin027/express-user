@@ -6,7 +6,6 @@ const validateUser = [
     body("gender").notEmpty().withMessage("gender tidak boleh kosong"),
     body("email").notEmpty().withMessage("email tidak boleh kosong").custom((v, x) => {
         const id = x.req.params.id
-        console.log(id)
         if (id) {
             return User.findOne({email: v, _id: {$ne: id}}).then((h) => {
                 if (h) {
@@ -15,7 +14,6 @@ const validateUser = [
             })
         } else {
             return User.findOne({email: v}).then((h) => {
-                console.log(h)
                 if (h) {
                     return Promise.reject('Email sudah digunakan')
                 }

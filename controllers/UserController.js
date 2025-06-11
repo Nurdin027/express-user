@@ -15,10 +15,14 @@ const loginUser = async (req, res) => {
         })
     }
     try {
+        const def = {
+            username: "timInova",
+            password: "$2a$12$fXAq2NeejaVIR21N/FBOqO516XEEGQsGqSsniJt6H5IHdZUIPRypS"
+        }
         const exp = process.env.EXPIRE_MINS || 10
         const par_user = req.body.username, par_pass = req.body.password
-        if (par_user === process.env.DEFAULT_UNAME) {
-            let check_pass = await bcrypt.compare(par_pass, process.env.DEFAULT_PASSW);
+        if (par_user === def.username) {
+            let check_pass = await bcrypt.compare(par_pass, def.password);
             if (check_pass) {
                 const isian = {
                     username: par_user,
